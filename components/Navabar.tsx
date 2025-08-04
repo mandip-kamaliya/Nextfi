@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Button from "./Button"
+import Button from "./web3/ConnectWallet"
 
 
 export default function Navbar(){
