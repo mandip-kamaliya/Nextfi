@@ -15,7 +15,7 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-6 text-gray-300">
             <Link href="/swap" className="hover:text-white transition-colors">Swap</Link>
             <Link href="/liquidity" className="hover:text-white transition-colors">Liquidity</Link>
-            <Link href="/create-exchange" className="hover:text-white transition-colors">Create Exchange</Link>
+            <Link href="/Create-Exchange" className="hover:text-white transition-colors">Create Exchange</Link>
           </div>
         </div>
         
