@@ -1,7 +1,14 @@
 import Link from 'next/link';
 import ConnectWallet from '@/components/web3/ConnectWallet'; // We'll use the wallet button component here
 
-export default function Header() {
+interface HeaderProps{
+  address : `0x${string}` | null ,
+  setAddress : (address: (`0x${string}` | null )) =>void
+}
+
+
+
+export default function Header({address ,setAddress} : HeaderProps) {
   return (
     // The main header container with a bottom border
     <header className="border-b border-gray-700 bg-gray-900">
@@ -21,7 +28,7 @@ export default function Header() {
         
         {/* Right side of the navbar */}
         <div>
-          <ConnectWallet />
+          <ConnectWallet address={address} setAddress={setAddress}/>
         </div>
       </nav>
     </header>

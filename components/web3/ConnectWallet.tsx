@@ -12,9 +12,14 @@ declare global {
   }
 }
 
-export default function ConnectWallet() {
+interface ConnectWalletProps{
+  address:`0x${string}` | null,
+  setAddress:(address : (`0x${string}` | null))=>void
+}
+
+export default function ConnectWallet({address,setAddress} : ConnectWalletProps) {
   // State to store the connected wallet address
-  const [address, setAddress] = useState<string | null>(null);
+  // const [address, setAddress] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function connect() {
