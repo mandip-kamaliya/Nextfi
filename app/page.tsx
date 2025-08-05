@@ -3,9 +3,7 @@
 import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  // Immediately redirect the user from the root URL ("/") to the "/swap" page.
+  // This will automatically send the user to the /swap page
+  // where the navbar is visible.
   redirect('/swap');
-
-  // Since redirect() is used, this component doesn't need to return any JSX.
-  // It will never be rendered.
 }

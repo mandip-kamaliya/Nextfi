@@ -3,6 +3,6 @@
 
 export default function page(){
     return (
-        <h1>SWAP</h1>
+        <h1 className="text-red-500">SWAP</h1>
     )
 }
