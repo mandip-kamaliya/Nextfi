@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,14 @@ export default function RootLayout({
         - text-white: Sets the default text color to white.
       */}
       <body className={`${inter.className} bg-gray-900 text-white`}>
-        {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
       </body>
     </html>
   );
