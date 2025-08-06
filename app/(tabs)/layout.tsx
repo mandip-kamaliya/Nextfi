@@ -12,7 +12,7 @@ export default function TabsLayout({
   const [address, setAddress] = useState<`0x${string}` | null>(null);
 console.log("PARENT LAYOUT address:", address);
   return (
-    <div className="bg-gray-800 min-h-screen text-white">
+    <div className=" min-h-screen text-white">
       {/* Pass the prop with the correct casing: setAddress */}
       <Header address={address} setAddress={setAddress} />
       
