@@ -1,34 +1,48 @@
 import Link from 'next/link';
-import ConnectWallet from '@/components/web3/ConnectWallet'; // We'll use the wallet button component here
+import ConnectWallet from '@/components/web3/ConnectWallet';
+import { ModeToggle } from '../mode-toggle';
 
-interface HeaderProps{
-  address : `0x${string}` | null ,
-  setAddress : (address: (`0x${string}` | null )) =>void
+interface HeaderProps {
+  address: `0x${string}` | null,
+  setAddress: (address: (`0x${string}` | null)) => void
 }
 
-
-
-export default function Header({address ,setAddress} : HeaderProps) {
+export default function Header({ address, setAddress }: HeaderProps) {
   return (
-    // The main header container with a bottom border
-    <header className="border-b border-gray-700 bg-gray-900">
-      {/* Navigation container to center content and add padding */}
+    <header className="border-b border-border bg-card/95 backdrop-blur">
       <nav className="container mx-auto flex items-center justify-between p-4">
         
-        {/* Left side of the navbar */}
         <div className="flex items-center gap-8">
-          <h1 className="text-xl font-bold text-yellow-400">DeFi DEX</h1>
-          {/* Links for navigation */}
-          <div className="hidden md:flex items-center gap-6 text-gray-300">
-            <Link href="/swap" className="hover:text-white transition-colors">Swap</Link>
-            <Link href="/liquidity" className="hover:text-white transition-colors">Liquidity</Link>
-            <Link href="/Create-Exchange" className="hover:text-white transition-colors">Create Exchange</Link>
+          {/* Keep yellow branding but make it theme-aware */}
+          <h1 className="text-xl font-bold text-yellow-500 dark:text-yellow-400">
+            DeFi DEX
+          </h1>
+          
+          <div className="hidden md:flex items-center gap-6">
+            <Link 
+              href="/swap" 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Swap
+            </Link>
+            <Link 
+              href="/liquidity" 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Liquidity
+            </Link>
+            <Link 
+              href="/Create-Exchange" 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Create Exchange
+            </Link>
           </div>
         </div>
         
-        {/* Right side of the navbar */}
-        <div>
-          <ConnectWallet address={address} setAddress={setAddress}/>
+        <div className="flex items-center gap-4">
+          <ConnectWallet address={address} setAddress={setAddress} />
+          <ModeToggle />
         </div>
       </nav>
     </header>

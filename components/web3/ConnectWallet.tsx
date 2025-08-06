@@ -2,37 +2,31 @@
 "use client";
 
 import { useState } from "react";
-import { createWalletClient, custom, WalletClient, hexToString, parseEther } from "viem";
+import { createWalletClient, custom, WalletClient } from "viem";
 import { sepolia } from "viem/chains";
 
-// It's good practice to declare the window.ethereum type for TypeScript
 declare global {
   interface Window {
     ethereum?: any;
   }
 }
 
-interface ConnectWalletProps{
-  address:`0x${string}` | null,
-  setAddress:(address : (`0x${string}` | null))=>void
+interface ConnectWalletProps {
+  address: `0x${string}` | null,
+  setAddress: (address: (`0x${string}` | null)) => void
 }
 
-export default function ConnectWallet({address,setAddress} : ConnectWalletProps) {
-  // State to store the connected wallet address
-  // const [address, setAddress] = useState<string | null>(null);
+export default function ConnectWallet({ address, setAddress }: ConnectWalletProps) {
   const [error, setError] = useState<string | null>(null);
 
   async function connect() {
-    // Reset previous errors
     setError(null);
 
-    // Ensure window.ethereum is available
     if (typeof window.ethereum === "undefined") {
       setError("MetaMask is not installed. Please install it to connect.");
       return;
     }
 
-    // Create the client inside the handler to ensure `window` is available
     const client: WalletClient = createWalletClient({
       chain: sepolia,
       transport: custom(window.ethereum),
@@ -41,11 +35,8 @@ export default function ConnectWallet({address,setAddress} : ConnectWalletProps)
     try {
       console.log("Connecting wallet...");
       const [connectedAddress] = await client.requestAddresses();
-      
-      // Update state with the connected address
       setAddress(connectedAddress);
       console.log(`Wallet connected at ${connectedAddress}`);
-
     } catch (err) {
       console.error("Connection failed:", err);
       setError("User rejected the connection request.");
@@ -53,19 +44,31 @@ export default function ConnectWallet({address,setAddress} : ConnectWalletProps)
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="relative">
       <button
         type="button"
         onClick={connect}
-        disabled={!!address} // Disable button after connecting
-        className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+        disabled={!!address}
+        className="h-10 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 disabled:bg-muted text-black dark:text-white font-medium rounded-md text-sm transition-colors disabled:cursor-not-allowed"
       >
         {address ? "Connected!" : "Connect Wallet"}
       </button>
 
-      {/* Display the connected address or any errors */}
-      {address && <p className="mt-2 text-green-600">Connected: {address}</p>}
-      {error && <p className="mt-2 text-red-600">Error: {error}</p>}
+      {/* Show connected address in a dropdown or tooltip style */}
+      {address && (
+        <div className="absolute top-12 right-0 bg-popover border border-border rounded-md p-2 text-xs text-popover-foreground shadow-lg z-10 min-w-[200px]">
+          <p className="text-green-600 dark:text-green-400">
+            Connected: {address.slice(0, 6)}...{address.slice(-4)}
+          </p>
+        </div>
+      )}
+      
+      {/* Show errors in a similar style */}
+      {error && (
+        <div className="absolute top-12 right-0 bg-popover border border-border rounded-md p-2 text-xs text-destructive shadow-lg z-10 min-w-[200px]">
+          <p>Error: {error}</p>
+        </div>
+      )}
     </div>
   );
 }
